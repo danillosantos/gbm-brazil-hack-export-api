@@ -16,6 +16,9 @@ export class Terminals extends BaseEntity {
   @Column({ nullable: false, name : "terminal_name", type: 'varchar' })
   terminalName : string;
 
+  @Column({ nullable: true, name : "sequence", type: 'int' })
+  sequence : string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
