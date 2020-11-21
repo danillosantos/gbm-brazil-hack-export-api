@@ -50,7 +50,7 @@ export class TerminalsRepository extends Repository<Terminals> {
             (select loading_rate from loading_rates lr where product_id = ships.product_id and terminal_id = ships.terminal_id) as minimum_loading_rate,
             total_on_board,
             terminal_id 
-            from ships where status = 'finished' and total_on_board is not null
+            from ships where status in ('finished', 'moored') and total_on_board is not null
         ) r
         group by r.terminal_id
       ) aggregation
