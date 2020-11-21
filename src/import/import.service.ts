@@ -4,7 +4,7 @@ import { ProductsService } from 'src/products/products.service';
 import { ShipsService } from 'src/ships/ships.service';
 import { TerminalsService } from 'src/terminals/terminals.service';
 
-import * as XLSX from 'XLSX';
+import * as XLSX from 'xlsx';
 import * as moment from 'moment';
 
 @Injectable()
