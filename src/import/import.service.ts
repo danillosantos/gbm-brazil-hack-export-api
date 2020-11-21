@@ -74,6 +74,7 @@ export class ImportService {
     shipData.atAnchorEndDate = this.parseDate(sheetRow['Data Saída Fundeio']);
     shipData.totalManifested = sheetRow['Manifestado'];
     shipData.totalOnBoard = sheetRow['Embarcado'];
+    shipData.draught = sheetRow['Calado'];
 
     if(sheetRow.id){
       shipData.id = sheetRow.id
@@ -88,6 +89,9 @@ export class ImportService {
   }
 
   private parseDate(dateString){
+    if (!dateString){
+      return null;
+    }
     if(moment().utcOffset() == 0){ //fixed xlsx library bug
       return moment(dateString).add(3, 'hours').toDate(); //this will cause problems if it's necessary to support multiple timezones in the future
     }

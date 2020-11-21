@@ -41,16 +41,16 @@ export class TerminalsRepository extends Repository<Terminals> {
       from terminals
       left join(
         select 
-          avg(current_loading_rate / minimum_loading_rate) as adherence,
+          (avg(current_loading_rate / minimum_loading_rate) * 100) as adherence,
           sum(total_on_board) as total_boarded,
           terminal_id
         from (
-          select 
-            total_on_board / (EXTRACT(EPOCH FROM coalesce(end_shipment_date, now()) - start_shipment_date )/3600) as current_loading_rate,
+          select
+            total_on_board / ((EXTRACT(EPOCH FROM coalesce(end_shipment_date, now()) - start_shipment_date )/3600) - coalesce(stoppage_hours, 0)) as current_loading_rate,
             (select loading_rate from loading_rates lr where product_id = ships.product_id and terminal_id = ships.terminal_id) as minimum_loading_rate,
             total_on_board,
             terminal_id 
-          from ships
+            from ships where status = 'finished' and total_on_board is not null
         ) r
         group by r.terminal_id
       ) aggregation
