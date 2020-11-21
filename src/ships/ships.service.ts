@@ -26,6 +26,7 @@ export class ShipsService {
       return {
         id : terminal.terminals_id,
         terminalName : terminal.terminals_terminal_name,
+        terminalSequence : terminal.terminals_sequence,
         lastOutgoingUnmooringDate : terminal.last_outgoing_unmooring_date,
         ships : []
       };
