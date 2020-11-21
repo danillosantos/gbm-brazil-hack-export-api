@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ShipFiltersDto } from './ships.dto';
 import { ShipsRepository } from './ships.repository';
 
 import * as _ from 'lodash';
@@ -14,11 +13,11 @@ export class ShipsService {
     private readonly terminalService : TerminalsService,
   ) {}
 
-  getShips(filters? : ShipFiltersDto) {
-    return this.shipsRepository.getShips(filters);
+  getShips() {
+    return this.shipsRepository.getShips();
   }
 
-  async getMooredShipsByTerminal(filters? : ShipFiltersDto) {    
+  async getMooredShipsByTerminal() {    
     let ships = await this.shipsRepository.getShips({ status : 'moored' });
     let terminals = await this.terminalService.getTerminalsWithLastUnmooringDate();
 
@@ -44,7 +43,7 @@ export class ShipsService {
     return terminals;
   }
 
-  async getInQueueShipsByTerminal(filters? : ShipFiltersDto) {
+  async getInQueueShipsByTerminal() {
     let ships = await this.shipsRepository.getShips({ status : 'at_anchor' });
     return this.groupByTerminal(this.normalizeShips(ships));
   }

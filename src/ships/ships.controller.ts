@@ -17,7 +17,6 @@ import {
 } from '@nestjs/swagger';
 
 import { ErrorHandling } from '../config/Error';
-import { ShipFiltersDto } from './ships.dto';
 import { ShipsService } from './ships.service';
 
 @Controller('ships')
@@ -27,21 +26,31 @@ export class ShipsController {
     private readonly ShipsService: ShipsService,
     ) {}
 
-  @ApiOperation({ summary: 'get moored ships' })
-  @Get('/moored')
-  async getMooredShipsByTerminal(@Query() filters : ShipFiltersDto) {
+  @ApiOperation({ summary: 'get ships' })
+  @Get()
+  async getShips() {
     try {
-      return this.ShipsService.getMooredShipsByTerminal(filters);
+      return this.ShipsService.getShips();
     } catch (error) {
       new ErrorHandling(error);
     }
   }
 
-  @ApiOperation({ summary: 'get ships' })
-  @Get('/queue')
-  async getInQueueShipsByTerminal(@Query() filters : ShipFiltersDto) {
+  @ApiOperation({ summary: 'get moored ships' })
+  @Get('/moored')
+  async getMooredShipsByTerminal() {
     try {
-      return this.ShipsService.getInQueueShipsByTerminal(filters);
+      return this.ShipsService.getMooredShipsByTerminal();
+    } catch (error) {
+      new ErrorHandling(error);
+    }
+  } 
+
+  @ApiOperation({ summary: 'get ships in queue' })
+  @Get('/queue')
+  async getInQueueShipsByTerminal() {
+    try {
+      return this.ShipsService.getInQueueShipsByTerminal();
     } catch (error) {
       new ErrorHandling(error);
     }
