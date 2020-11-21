@@ -21,6 +21,7 @@ export class TerminalsRepository extends Repository<Terminals> {
       .createQueryBuilder()
       .select('ships.outgoing_unmooring_date', 'last_outgoing_unmooring_date')
       .from(Ships, 'ships')
+      .where('ships.terminal_id = terminals.id')
       .orderBy({ 'outgoing_unmooring_date' : { order : 'DESC', nulls : 'NULLS LAST' } })
       .limit(1)
       .getQuery();
