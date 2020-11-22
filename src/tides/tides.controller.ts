@@ -27,4 +27,14 @@ export class TidesController {
     }
   }
 
+  @ApiOperation({ summary: 'get weather' })
+  @Get('weather')
+  async getWeather() {
+    try {
+      return this.TidesService.getWeather();
+    } catch (error) {
+      new ErrorHandling(error);
+    }
+  }
+
 }
